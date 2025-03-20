@@ -10,8 +10,11 @@ A simple API to manage products using **Node.js, Express, MongoDB, and Mongoose*
 ## Installation
 
 git clone https://github.com/Ange-Mukundente/product-catalog-api.git
+
 cd product-catalog-api
-npm install &
+
+npm install 
+
 npm run dev
 
 API Endpoints
