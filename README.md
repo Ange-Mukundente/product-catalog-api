@@ -17,7 +17,8 @@ npm install
 
 npm run dev
 
-API Endpoints
+API Endpoints:
+
 GET /api/products → Get all products,
 
 POST /api/products → Add a product,
