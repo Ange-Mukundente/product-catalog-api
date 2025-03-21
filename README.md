@@ -1,23 +1,23 @@
 # **Product Catalog API**  
 
 ## **📌 Project Overview**  
-The **Product Catalog API** is a RESTful API built with **Node.js, Express, and MongoDB**. It enables users to **manage product categories** and **products**, including CRUD operations such as creating, updating, retrieving, and deleting records.  
+The **Product Catalog API** is a RESTful API built with **Node.js, Express, and MongoDB**. It allows users to manage **products** and **categories**, performing CRUD operations efficiently.  
 
 ---
 
 ## **📜 Features**  
-✅ **Product Management:** Create, Read, Update, Delete (CRUD) operations on products  
-✅ **Category Management:** Organize products into categories  
-✅ **RESTful API Design:** Follows best practices for API structure  
-✅ **MongoDB Integration:** Stores product and category data efficiently  
-✅ **Error Handling:** Handles missing fields, invalid requests, and database errors  
+✅ **Product Management** – CRUD operations for products  
+✅ **Category Management** – Organize products into categories  
+✅ **RESTful API Design** – Follows best API design practices  
+✅ **MongoDB Integration** – Uses Mongoose for data handling  
+✅ **Middleware Support** – Error handling with custom middleware  
 
 ---
 
 ## **🛠️ Tech Stack**  
 - **Backend:** Node.js, Express.js  
-- **Database:** MongoDB (via Mongoose ORM)  
-- **API Testing:** Thunder Client (or Postman)  
+- **Database:** MongoDB (Mongoose ORM)  
+- **API Testing:** Thunder Client / Postman  
 - **Development Tools:** Nodemon, dotenv  
 
 ---
@@ -26,7 +26,7 @@ The **Product Catalog API** is a RESTful API built with **Node.js, Express, and 
 
 ### **1️⃣ Clone the Repository**  
 ```bash
-git clone https://github.com/yourusername/product-catalog-api.git
+git https://github.com/Ange-Mukundente/product-catalog-api.git
 cd product-catalog-api
 ```
 
@@ -38,7 +38,7 @@ npm install
 ### **3️⃣ Configure Environment Variables**  
 Create a `.env` file in the root directory and add:  
 ```
-MONGO_URI=your_mongodb_connection_string
+MONGO_URI=mongodb://localhost:27017/product-catalog
 PORT=5000
 ```
 
@@ -53,21 +53,26 @@ npm run dev
 ## **📂 Project Structure**  
 ```
 📦 product-catalog-api
-├── 📂 controllers        # Business logic for API endpoints
-│   ├── categoryController.js
-│   ├── productController.js
-├── 📂 models             # Mongoose schemas
-│   ├── Category.js
-│   ├── Product.js
-├── 📂 routes             # API routes
-│   ├── categoryRoutes.js
-│   ├── productRoutes.js
-├── 📂 config             # Database connection setup
-│   ├── db.js
-├── 📜 .env               # Environment variables
-├── 📜 package.json       # Dependencies & scripts
-├── 📜 README.md          # Project documentation
-├── 📜 server.js          # Main entry point
+│── node_modules
+│── src
+│   ├── models            # Mongoose schemas
+│   │   ├── Product.js
+│   │   ├── Category.js
+│   ├── routes            # API routes
+│   │   ├── productRoutes.js
+│   │   ├── categoryRoutes.js
+│   ├── controllers       # Business logic for API endpoints
+│   │   ├── productController.js
+│   │   ├── categoryController.js
+│   ├── middlewares       # Middleware functions
+│   │   ├── errorHandler.js
+│   ├── config            # Database connection setup
+│   │   ├── db.js
+│   ├── app.js            # Express app setup
+│── .env                  # Environment variables
+│── server.js             # Main entry point
+│── package.json          # Dependencies & scripts
+│── README.md             # Project documentation
 ```
 
 ---
@@ -120,8 +125,9 @@ npm run dev
 
 ### **🔸 Issue: Data Not Saving in Database**
 **Solution:**  
-- Check if the request is sending **JSON format**  
-- Add `console.log(req.body)` in controllers to debug  
+- Ensure the request is sending **JSON format**  
+- Add `console.log(req.body)` in controllers to debug
+- Check The Method used if is correct one 
 
 ---
 
@@ -131,6 +137,6 @@ This project is licensed under the **MIT License**.
 ---
 
 ## **📞 Contact**  
-For questions or contributions, contact:  
-📧 Email: your-email@example.com  
-🔗 GitHub: [Your GitHub](https://github.com/yourusername)  
+For questions or contact:  
+📧 Email: a.mukundent@alustudent.com  
+🔗 GitHub: [Ange-Mukundente](https://github.com/Ange-Mukundente/product-catalog-api.git)  
