@@ -129,16 +129,6 @@ npm run dev
 - Add `console.log(req.body)` in controllers to debug
 - Check The Method used if is correct one 
 
-Authentication & Authorization
-This API uses JWT authentication to secure routes:
-🔹 Login: Users must authenticate using the /api/auth/login endpoint.
-🔹 Token-Based Access: A token is returned on login, which must be included in the Authorization header (Bearer <token>) for protected routes.
-🔹 Protected Routes:
-
-Only authenticated users can create, update, or delete products and categories.
-
-Public routes (GET requests) can be accessed without authentication.
-
 
 ---
 
