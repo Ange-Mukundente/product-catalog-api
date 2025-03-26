@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const { generateToken } = require("../middleware/authMiddleware");
 
 exports.register = async (req, res) => {
   try {
@@ -29,31 +30,22 @@ exports.register = async (req, res) => {
   }
 };
 
+
+
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Invalid credentials" });
+
+    if (!user || !(await user.comparePassword(password))) {
+      return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Invalid credentials" });
-    }
+
     if (!user.isActive) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Account is deactivated" });
+      return res.status(401).json({ success: false, message: "Account is deactivated" });
     }
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
+
+    const token = generateToken(user);
 
     res.json({
       success: true,

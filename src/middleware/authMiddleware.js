@@ -1,61 +1,34 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
 
-exports.protect = async (req, res, next) => {
+exports.verifyToken = (req, res, next) => {
+  const token = req.header("Authorization");
+
+  if (!token) {
+    return res.status(401).json({ success: false, message: "Access denied. No token provided." });
+  }
+
   try {
-    let token;
-
-    // Check if token exists in headers
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")
-    ) {
-      token = req.headers.authorization.split(" ")[1];
-    }
-
-    // Check if token exists
-    if (!token) {
-      return res.status(401).json({
-        success: false,
-        message: "Not authorized, no token",
-      });
-    }
-
-    try {
-      // Verify token
-      const decoded = jwt.verify(
-        token,
-        process.env.JWT_SECRET || "your_jwt_secret"
-      );
-
-      // Add user to request object
-      req.user = await User.findById(decoded.id).select("-password");
-
-      next();
-    } catch (error) {
-      return res.status(401).json({
-        success: false,
-        message: "Not authorized, token failed",
-      });
-    }
+    const decoded = jwt.verify(token.replace("Bearer ", ""), process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
   } catch (error) {
-    console.error("Auth middleware error:", error);
-    res.status(500).json({
-      success: false,
-      message: "Server error in authentication",
-    });
+    res.status(400).json({ success: false, message: "Invalid token" });
   }
 };
 
-// Middleware for role-based authorization
-exports.authorize = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return res.status(403).json({
-        success: false,
-        message: `Role ${req.user.role} is not authorized to access this resource`,
-      });
-    }
-    next();
-  };
+// Function to generate JWT
+exports.generateToken = (user) => {
+  return jwt.sign(
+    { id: user._id, role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+};
+
+// Middleware to verify admin role
+exports.verifyAdmin = (req, res, next) => {
+  if (!req.user || req.user.role !== "admin") {
+    return res.status(403).json({ success: false, message: "Access denied. Admins only." });
+  }
+  next();
 };
